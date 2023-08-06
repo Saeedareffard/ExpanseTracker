@@ -1,9 +1,7 @@
-﻿using Application.Specifications;
+﻿using Application.Services;
 using Domain.Entities;
-using Domain.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Routing.Constraints;
 
 namespace Application.Controllers;
 
@@ -12,25 +10,23 @@ namespace Application.Controllers;
 [Authorize]
 public class TransactionController : ControllerBase
 {
-    private readonly IUnitOfWork _unitOfWork;
+    private readonly TransactionService _service;
 
-    public TransactionController(IUnitOfWork unitOfWork)
+    public TransactionController(TransactionService service)
     {
-        _unitOfWork = unitOfWork;
+        _service = service;
     }
 
     [HttpGet("category")]
     public ActionResult<IEnumerable<Transaction>> GetTransactionsByCategory([FromQuery] int categoryId)
     {
-        return _unitOfWork.Repository<Transaction>()
-            .Find(new TransactionSpecification.TransactionsByCategoryIdSpecification(categoryId)).ToList();
+        return Ok(_service.GetByCategory(categoryId));
     }
 
     [HttpGet("categoryIds")]
     public ActionResult<IEnumerable<Transaction>> GetTransactionByCategories([FromQuery] List<int> categoryIds)
     {
-        return _unitOfWork.Repository<Transaction>()
-            .Find(new TransactionSpecification.TransactionsByCategoryIdSpecification(categoryIds)).ToList();
+        return Ok(_service.GetByCategoryIds(categoryIds));
     }
 
     [HttpGet]
@@ -39,19 +35,15 @@ public class TransactionController : ControllerBase
         [FromQuery] string? orderBy, [FromQuery] string? orderByDesc)
     {
         if (orderBy != null && orderByDesc != null)
-        {
             return BadRequest("either one of these parameters should be mentioned : orderBy , orderByDesc");
-        }
 
-        return _unitOfWork.Repository<Transaction>()
-            .Find(new TransactionSpecification.TransactionsPagedAndOrdered(page: pageNumber, size: size,
-                orderBy: orderBy, orderByDes: orderByDesc)).ToList();
+        return Ok(_service.Get(pageNumber, size, orderBy, orderByDesc));
     }
 
     [HttpGet("id")]
     public ActionResult<Transaction> GetTransaction(int id)
     {
-        return Ok(_unitOfWork.Repository<Transaction>().GetById(id));
+        return Ok(_service.GetById(id));
     }
 
     [HttpPost]
@@ -59,8 +51,7 @@ public class TransactionController : ControllerBase
     {
         try
         {
-            _unitOfWork.Repository<Transaction>().Add(transaction);
-            _unitOfWork.Complete();
+            _service.Add(transaction);
             return CreatedAtAction("GetTransaction", new { id = transaction.Id }, transaction);
         }
         catch (Exception e)
@@ -72,15 +63,10 @@ public class TransactionController : ControllerBase
     [HttpPut]
     public ActionResult<Transaction> UpdateTransaction([FromBody] Transaction transaction)
     {
-        if (!_unitOfWork.Repository<Transaction>().Contains(x => x.Id == transaction.Id))
-        {
-            return NotFound();
-        }
-
         try
         {
-            _unitOfWork.Repository<Transaction>().Update(transaction);
-            _unitOfWork.Complete();
+            var result = _service.Update(transaction);
+            if (!result) return NotFound();
             return Ok(transaction);
         }
         catch (Exception e)
@@ -88,5 +74,4 @@ public class TransactionController : ControllerBase
             return BadRequest(e.Message);
         }
     }
-
 }
