@@ -64,6 +64,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
 builder.Services.AddTransient<GoalService>();
 builder.Services.AddTransient<TransactionService>();
+builder.Services.AddTransient<CategoryService>();
 
 var app = builder.Build();
 app.UseAuthentication();

@@ -48,7 +48,7 @@ public class GoalController : ControllerBase
                 return NotFound();
             }
 
-            return Ok();
+            return NoContent();
         }
         catch (Exception e)
         {
@@ -67,7 +67,7 @@ public class GoalController : ControllerBase
                 return NotFound();
             }
 
-            return Ok();
+            return NoContent();
         }
         catch (Exception e)
         {

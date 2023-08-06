@@ -1,4 +1,5 @@
-﻿using Domain.Entities;
+﻿using Application.Services;
+using Domain.Entities;
 using Domain.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -10,11 +11,12 @@ namespace Application.Controllers;
 [Authorize]
 public class CategoryController : ControllerBase
 {
-    private readonly IUnitOfWork _unitOfWork;
 
-    public CategoryController(IUnitOfWork unitOfWork)
+    private readonly CategoryService _service;
+
+    public CategoryController(CategoryService service)
     {
-        _unitOfWork = unitOfWork;
+        _service = service;
     }
 
     [HttpPost]
@@ -22,8 +24,7 @@ public class CategoryController : ControllerBase
     {
         try
         {
-            _unitOfWork.Repository<Category>().Add(category);
-            _unitOfWork.Complete();
+            _service.Add(category);
             return CreatedAtAction("GetCategory", new { id = category.Id }, category);
         }
         catch (Exception e)
@@ -37,41 +38,40 @@ public class CategoryController : ControllerBase
     [HttpGet("id")]
     public ActionResult<Category> GetCategory(int id)
     {
-        var category = _unitOfWork.Repository<Category>().GetById(id);
+        var category = _service.GetById(id);
         if (category == null) return NotFound();
 
         return Ok(category);
     }
 
-    [HttpPut("id")]
-    public ActionResult UpdateCategory(int id, [FromBody] Category category)
+    [HttpPut]
+    public ActionResult UpdateCategory( [FromBody] Category category)
     {
-        if (id != category.Id) return BadRequest();
-
-        _unitOfWork.Repository<Category>().Update(category);
-
         try
         {
-            _unitOfWork.Complete();
+            var result = _service.Update(category);
+            if (!result)
+            {
+                return NotFound();
+            }
+
+            return NoContent();
         }
         catch (DbUpdateConcurrencyException e)
         {
-            if (!_unitOfWork.Repository<Category>().Contains(x => x.Id == id)) return NotFound();
             return BadRequest(e);
         }
-
-        return NoContent();
     }
 
     [HttpDelete("id")]
-    public ActionResult<Category> DeleteCategory(int id)
+    public ActionResult DeleteCategory(int id)
     {
-        var category = _unitOfWork.Repository<Category>().GetById(id);
-        if (category == null) return NotFound();
+        var result = _service.Delete(id);
+        if (!result)
+        {
+            return NotFound();
+        }
 
-        _unitOfWork.Repository<Category>().Remove(category);
-        _unitOfWork.Complete();
-
-        return Ok(category);
+        return NoContent();
     }
 }

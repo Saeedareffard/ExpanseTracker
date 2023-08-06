@@ -55,10 +55,7 @@ public class TransactionService
     public bool Delete(int id)
     {
         var result = GetById(id);
-        if (result is null)
-        {
-            return false;
-        }
+        if (result is null) return false;
         _unitOfWork.Repository<Transaction>().Remove(result);
         _unitOfWork.Complete();
         return true;

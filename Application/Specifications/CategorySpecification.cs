@@ -5,4 +5,5 @@ namespace Application.Specifications;
 
 public class CategorySpecification : BaseSpecification<Category>
 {
+    
 }

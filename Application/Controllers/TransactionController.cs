@@ -74,4 +74,16 @@ public class TransactionController : ControllerBase
             return BadRequest(e.Message);
         }
     }
+
+    [HttpDelete]
+    public ActionResult DeleteTransaction(int id)
+    {
+        var result = _service.Delete(id);
+        if (!result)
+        {
+            return NotFound();
+        }
+
+        return NoContent();
+    }
 }
