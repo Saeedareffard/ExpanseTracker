@@ -39,6 +39,32 @@ namespace ExpanseTracker.Migrations
                     b.ToTable("Category");
                 });
 
+            modelBuilder.Entity("Domain.Entities.Goal", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<double>("CurrentAmount")
+                        .HasColumnType("float");
+
+                    b.Property<DateTime?>("Deadline")
+                        .HasColumnType("datetime2");
+
+                    b.Property<double>("GoalAmount")
+                        .HasColumnType("float");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Goals");
+                });
+
             modelBuilder.Entity("Domain.Entities.Transaction", b =>
                 {
                     b.Property<int>("Id")

@@ -1,4 +1,5 @@
 using System.Text;
+using Application.Services;
 using Domain.Interfaces;
 using Infrastructure.Helpers;
 using Infrastructure.Persistence.contexts;
@@ -61,6 +62,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("ExpanseTracker"));
 });
 builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
+builder.Services.AddTransient<GoalService>();
 
 var app = builder.Build();
 app.UseAuthentication();

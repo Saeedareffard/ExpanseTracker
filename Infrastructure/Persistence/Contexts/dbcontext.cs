@@ -12,4 +12,5 @@ public class ApplicationDbContext : DbContext
     public DbSet<Transaction>? Transactions { get; set; } = null;
     public DbSet<User> Users { get; set; } = null;
     public DbSet<Category> Category { get; set; } = null;
+    public DbSet<Goal> Goals { get; set; } = null;
 }

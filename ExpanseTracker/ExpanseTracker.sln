@@ -5,11 +5,11 @@ VisualStudioVersion = 17.4.33205.214
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExpanseTracker", "ExpanseTracker.csproj", "{6C8DF412-0060-404F-A702-ABCA81190AF4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure", "..\Infrastructure\Infrastructure.csproj", "{8F9BCE9D-46BF-46EB-B724-F4153E0945F3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure", "..\Infrastructure\Infrastructure.csproj", "{8F9BCE9D-46BF-46EB-B724-F4153E0945F3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "..\Domain\Domain.csproj", "{BA5E48CF-A513-4F5C-BE1E-8664B03F1F9A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "..\Domain\Domain.csproj", "{BA5E48CF-A513-4F5C-BE1E-8664B03F1F9A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application", "..\Application\Application.csproj", "{6444E138-0B25-4208-A7A6-B5445F79D91E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application", "..\Application\Application.csproj", "{6444E138-0B25-4208-A7A6-B5445F79D91E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
