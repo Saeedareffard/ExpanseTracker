@@ -41,6 +41,6 @@ steps:
   inputs:
     ConnectionType: 'AzureRM'
     azureSubscription: 'Azure for Students(bf4ce3da-7ad6-448c-87c9-93da8db009f4)'
-    appType: 'webApp'
+    appType: 'apiApp'
     WebAppName: 'ExpanseTracker'
     packageForLinux: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
