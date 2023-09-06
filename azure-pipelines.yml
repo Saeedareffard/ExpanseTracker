@@ -1,5 +1,5 @@
 # ASP.NET Core (.NET Framework)
-# Build and test ASP.NET Core projects targeting the full .NET Framework.
+# Build and deploy ASP.NET Core projects targeting .NET Core.
 # Add steps that publish symbols, save build artifacts, and more:
 # https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core
 
@@ -7,7 +7,7 @@ trigger:
 - master
 
 pool:
-  vmImage: 'windows-latest'
+  vmImage: 'ubuntu-latest'
 
 variables:
   solution: '**/*.sln'
@@ -16,6 +16,11 @@ variables:
   project: '**/*.csproj'
 
 steps:
+- task: UseDotNet@2
+  inputs:
+    packageType: 'sdk'
+    version: '3.x'
+
 - task: NuGetToolInstaller@1
 
 - task: NuGetCommand@2
@@ -28,7 +33,6 @@ steps:
     projects: '$(project)'
     arguments: '--configuration $(buildConfiguration) --output $(build.ArtifactStagingDirectory)'
 
-# Package the published files into a ZIP package
 - task: ArchiveFiles@2
   inputs:
     rootFolderOrFile: '$(build.ArtifactStagingDirectory)'
@@ -40,6 +44,6 @@ steps:
   inputs:
     ConnectionType: 'AzureRM'
     azureSubscription: 'Azure for Students(bf4ce3da-7ad6-448c-87c9-93da8db009f4)'
-    appType: 'apiApp'
-    WebAppName: 'ExpanseTracker'
+    appType: 'webApp'
+    WebAppName: 'ExpanseTracker' # Ensure this matches your Azure App Service name
     packageForLinux: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
