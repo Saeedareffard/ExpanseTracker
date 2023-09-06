@@ -22,18 +22,20 @@ steps:
   inputs:
     restoreSolution: '$(solution)'
 
-# - task: VSBuild@1
-#   inputs:
-#     solution: '$(solution)'
-#     msbuildArgs: '/p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:DesktopBuildPackageLocation="$(build.artifactStagingDirectory)\WebApp.zip" /p:DeployIisAppPath="Default Web Site"'
-#     platform: '$(buildPlatform)'
-#     configuration: '$(buildConfiguration)'
 - task: DotNetCoreCLI@2
   inputs:
     command: 'publish'
     projects: '$(project)'
     arguments: '--configuration $(buildConfiguration) --output $(build.ArtifactStagingDirectory)'
 
+# Package the published files into a ZIP package
+- task: ArchiveFiles@2
+  inputs:
+    rootFolderOrFile: '$(build.ArtifactStagingDirectory)'
+    includeRootFolder: false
+    archiveType: 'zip'
+    archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+    replaceExistingArchive: true
 
 - task: AzureRmWebAppDeployment@4
   inputs:
@@ -41,4 +43,4 @@ steps:
     azureSubscription: 'Azure for Students(bf4ce3da-7ad6-448c-87c9-93da8db009f4)'
     appType: 'webApp'
     WebAppName: 'ExpanseTracker'
-    packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
+    packageForLinux: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
