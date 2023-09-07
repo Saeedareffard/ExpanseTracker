@@ -9,6 +9,7 @@ variables:
   buildConfiguration: 'Release'
   solution: '**/*.sln'
   project: '**/*.csproj'
+  sqlFile: '$(Build.SourcesDirectory)/SQL/sqlscript.sql'
 
 steps:
 - task: NuGetToolInstaller@1
@@ -47,6 +48,7 @@ steps:
     command: custom
     custom: 'tool'
     arguments: 'install --global dotnet-ef --version 6.0.2'
+
 # Create SQL Script
 - task: DotNetCoreCLI@2
   displayName: Create SQL Scripts
