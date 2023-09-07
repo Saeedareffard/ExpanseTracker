@@ -13,13 +13,12 @@ env:
   AZURE_APIM_APPSERVICEURL: https://expansetracker20230906210145.azurewebsites.net
   SWASHBUCLE_ASPNET_CORE_CLI_PACKAGE_VERSION: 5.6.3
   SWASHBUCKLE_DOTNET_CORE_VERSION: 3.1.x
-  API_IMPORT_SPECIFICATION_PATH: .\publish\swagger.json
-  API_IMPORT_DLL: .\bin\Release\net6.0\ExpanseTracker.dll
+  API_IMPORT_SPECIFICATION_PATH: ./ExpanseTracker/bin/Release/net6.0/swagger.json
   API_IMPORT_VERSION: v1
   CONFIGURATION: Release
   DOTNET_CORE_VERSION: 6.0.x
   WORKING_DIRECTORY: ./ExpanseTracker/
-  
+
 jobs:
   build:
     runs-on: windows-latest
@@ -43,7 +42,7 @@ jobs:
       run: dotnet tool install --global Swashbuckle.AspNetCore.Cli --version ${{ env.SWASHBUCLE_ASPNET_CORE_CLI_PACKAGE_VERSION }}
       working-directory: ${{ env.WORKING_DIRECTORY }}
     - name: Generate Open API Specification Document
-      run: swagger tofile --output "${{ env.API_IMPORT_SPECIFICATION_PATH }}" "${{ env.API_IMPORT_DLL }}" "${{ env.API_IMPORT_VERSION }}"
+      run: swagger tofile --output "${{ env.API_IMPORT_SPECIFICATION_PATH }}" "${{ env.API_IMPORT_VERSION }}"
     - name: Publish Artifacts
       uses: actions/upload-artifact@v1.0.0
       with:
