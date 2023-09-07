@@ -47,7 +47,7 @@ public class Startup
                 Title = "Expanse Tracker",
                 Version = "v1"
             });
-            /*   c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+               c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                {
                    Name = "Authorization",
                    Type = SecuritySchemeType.ApiKey,
@@ -70,7 +70,7 @@ public class Startup
                        },
                        new string[] { }
                    } 
-               }); */
+               }); 
         });
         services.AddDbContext<ApplicationDbContext>(options =>
         {
@@ -92,12 +92,14 @@ public class Startup
 
         app.UseHttpsRedirection();
 
+        app.UseRouting();
         app.UseAuthorization();
         app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
-
         app.UseEndpoints(endpoints =>
         {
             endpoints.MapControllers();
         });
-    }
+        app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+
+            }
 }
