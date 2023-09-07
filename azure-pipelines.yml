@@ -9,6 +9,7 @@ variables:
   buildConfiguration: 'Release'
   solution: '**/*.sln'
   project: '**/*.csproj'
+  sqlFile: '$(Build.SourcesDirectory)/SQL/sqlscript.sql'
 
 steps:
 - task: NuGetToolInstaller@1
@@ -47,6 +48,7 @@ steps:
     command: custom
     custom: 'tool'
     arguments: 'install --global dotnet-ef --version 6.0.2'
+
 # Create SQL Script
 - task: DotNetCoreCLI@2
   displayName: Create SQL Scripts
@@ -73,7 +75,7 @@ steps:
   inputs:
     azureSubscription: 'Azure for Students(1)(bf4ce3da-7ad6-448c-87c9-93da8db009f4)'
     AuthenticationType: 'server'
-    ServerName: '$(SqlServer-Name)'
+    ServerName: 'mylovelyworkspace77sa.database.windows.net'
     DatabaseName: 'ExpanseTracker'
     SqlUsername: '$(SqlServer-Username)'
     SqlPassword: '$(SqlServer-Password)'
