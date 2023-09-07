@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Application.Controllers;
 
 [ApiController]
-[Authorize]
+//[Authorize]
 [Route("api/[controller]")]
 public class GoalController : ControllerBase
 {

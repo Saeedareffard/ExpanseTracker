@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 namespace Application.Controllers;
 
 [Route("api/[controller]")]
-[Authorize]
+//[Authorize]
 public class CategoryController : ControllerBase
 {
 
