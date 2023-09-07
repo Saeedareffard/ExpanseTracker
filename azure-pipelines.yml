@@ -1,49 +1,77 @@
-# ASP.NET Core (.NET Framework)
-# Build and deploy ASP.NET Core projects targeting .NET Core.
-# Add steps that publish symbols, save build artifacts, and more:
-# https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core
-
 trigger:
 - master
 
 pool:
-  vmImage: 'ubuntu-latest'
+  vmImage: 'windows-latest'
 
 variables:
-  solution: '**/*.sln'
-  buildPlatform: 'Any CPU'
-  buildConfiguration: 'Release'
-  project: '**/*.csproj'
+  AZURE_WEBAPP_NAME: 'ExpanseTracker20230906210145'
+  AZURE_WEBAPP_PACKAGE_PATH: '$(Build.ArtifactStagingDirectory)/publish'
+  AZURE_APIM_RESOURCE_PATH: '/'
+  AZURE_APIM_RESOURCEGROUP: 'ExpanseTrackerWindows'
+  AZURE_APIM_SERVICENAME: 'ExpanseTrackerapi2'
+  AZURE_APIM_API_ID: 'ExpanseTracker'
+  AZURE_APIM_APPSERVICEURL: 'https://expansetracker20230906210145.azurewebsites.net'
+  SWASHBUCKLE_ASPNET_CORE_CLI_PACKAGE_VERSION: '5.6.3'
+  SWASHBUCKLE_DOTNET_CORE_VERSION: '3.1.x'
+  API_IMPORT_SPECIFICATION_PATH: 'ExpanseTracker/bin/Release/net6.0/swagger.json'
+  API_IMPORT_DLL: 'ExpanseTracker/bin/Release/net6.0/ExpanseTracker.dll'
+  API_IMPORT_VERSION: 'v1'
+  CONFIGURATION: 'Release'
+  DOTNET_CORE_VERSION: '6.0.x'
+  WORKING_DIRECTORY: 'ExpanseTracker'
 
-steps:
-- task: UseDotNet@2
-  inputs:
-    packageType: 'sdk'
-    version: '6.x'
+jobs:
+- job: Build
+  displayName: 'Build and Publish'
+  steps:
+  - task: UseDotNet@2
+    inputs:
+      packageType: 'sdk'
+      version: '$(DOTNET_CORE_VERSION)'
+      installationPath: $(Agent.ToolsDirectory)/dotnet
 
-- task: NuGetToolInstaller@1
+  - script: dotnet restore '$(WORKING_DIRECTORY)'
+    displayName: 'Restore'
 
-- task: NuGetCommand@2
-  inputs:
-    restoreSolution: '$(solution)'
+  - script: dotnet build '$(WORKING_DIRECTORY)' --configuration $(CONFIGURATION) --no-restore
+    displayName: 'Build'
 
-- task: DotNetCoreCLI@2
-  inputs:
-    command: 'publish'
-    projects: '$(project)'
-    arguments: '--configuration $(buildConfiguration) --output $(build.ArtifactStagingDirectory)'
+  - script: dotnet publish '$(WORKING_DIRECTORY)' --configuration $(CONFIGURATION) --no-build --output '$(AZURE_WEBAPP_PACKAGE_PATH)'
+    displayName: 'Publish'
 
-- task: ArchiveFiles@2
-  inputs:
-    rootFolderOrFile: '$(build.ArtifactStagingDirectory)'
-    archiveType: 'zip'
-    archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
-    replaceExistingArchive: true
+  - powershell: Install-Tool -Name 'Swashbuckle.AspNetCore.Cli' -Scope 'CurrentUser' -Force -AllowPrerelease -ExactVersion $(SWASHBUCKLE_ASPNET_CORE_CLI_PACKAGE_VERSION)
+    displayName: 'Install Swashbuckle CLI .NET Global Tool'
 
-- task: AzureRmWebAppDeployment@4
-  inputs:
-    ConnectionType: 'AzureRM'
-    azureSubscription: 'Azure for Students(bf4ce3da-7ad6-448c-87c9-93da8db009f4)'
-    appType: 'webApp'
-    WebAppName: 'ExpanseTracker' # Ensure this matches your Azure App Service name
-    packageForLinux: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+  - script: swagger tofile --output '$(API_IMPORT_SPECIFICATION_PATH)' '$(API_IMPORT_DLL)' '$(API_IMPORT_VERSION)'
+    displayName: 'Generate Open API Specification Document'
+
+  - task: PublishBuildArtifacts@1
+    inputs:
+      pathtoPublish: '$(AZURE_WEBAPP_PACKAGE_PATH)'
+      artifactName: 'webapp'
+
+- job: Deploy
+  displayName: 'Deploy to Azure'
+  dependsOn: Build
+  steps:
+  - download: current
+    artifact: 'webapp'
+    displayName: 'Download artifact from build job'
+
+  - task: AzureWebApp@1
+    inputs:
+      azureSubscription: 'Azure for Students(bf4ce3da-7ad6-448c-87c9-93da8db009f4)'
+      appType: 'webApp'
+      appName: 'ExpanseTracker20230906210145'
+      package: '$(Pipeline.Workspace)/webapp/$(Build.BuildId).zip'
+      deploymentMethod: 'zipDeploy'
+      
+
+  - script: |
+      az apim api import --path "$(AZURE_APIM_RESOURCE_PATH)" --resource-group "$(AZURE_APIM_RESOURCEGROUP)" --service-name "$(AZURE_APIM_SERVICENAME)" --api-id "$(AZURE_APIM_API_ID)" --service-url "$(AZURE_APIM_APPSERVICEURL)" --specification-path "$(API_IMPORT_SPECIFICATION_PATH)" --specification-format OpenApi --subscription-required false
+    displayName: 'Import API into Azure API Management'
+
+  - script: |
+      az logout
+    displayName: 'Azure Logout'
