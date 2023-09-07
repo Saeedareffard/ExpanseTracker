@@ -97,11 +97,11 @@
               "type": "Microsoft.ApiManagement/service/apis",
               "name": "ExpanseTrackerapi2/ExpanseTracker",
               "properties": {
-                "displayName": "ExpanseTracker",
+                "displayName": "Expanse Tracker",
                 "apiRevision": "1",
                 "description": null,
                 "subscriptionRequired": true,
-                "serviceUrl": null,
+                "serviceUrl": "https://expansetracker20230906210145.azurewebsites.net",
                 "path": "",
                 "protocols": [
                   "https"

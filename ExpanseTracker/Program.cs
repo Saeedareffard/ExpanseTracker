@@ -63,8 +63,8 @@ builder.Services.AddSwaggerGen(c =>
 });
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
-    options.UseSqlServer(b => b.MigrationsAssembly("ExpanseTrackerAzure"));
     options.UseSqlServer(builder.Configuration.GetConnectionString("ExpanseTrackerAzure"));
+    options.UseSqlServer(b => b.MigrationsAssembly("ExpanseTracker"));
 });
 builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
 builder.Services.AddTransient<GoalService>();

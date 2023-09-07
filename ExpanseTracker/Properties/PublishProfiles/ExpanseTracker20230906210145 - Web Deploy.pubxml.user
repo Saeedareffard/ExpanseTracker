@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+This file is used by the publish/package process of your Web project. You can customize the behavior of this process
+by editing this MSBuild file. In order to learn more about this please visit https://go.microsoft.com/fwlink/?LinkID=208121. 
+-->
+<Project>
+  <PropertyGroup>
+    <TimeStampOfAssociatedLegacyPublishXmlFile />
+    <EncryptedPassword>AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAb/6UMbmUVEOFnhZU2LS0GQAAAAACAAAAAAAQZgAAAAEAACAAAABuq5skx1loZ2LEuxnWnYjndzgikVRIXD5b0ul0AtiKGwAAAAAOgAAAAAIAACAAAAB5JPsET5JP2LTsWcW4luMGTXV1ji2tZdCWm+e3+XGOEYAAAAAVg45higlpGfBvT2nLfkGpG5s/456uX08jvaHZYOliBiIf5gQ8Kyb7FnoZxLTYfDttwrQ5tp1LOkFrW2KqDP3MLlzD8gzDwBNll4bNoCDRtrJRiPiEGqqcRjipAgYye0h4UL1/9z/jcoqNGqSVBAVL2UoqOiPIT/zWSx6sQXIc5EAAAABdOryUe8had//y0JkYzyKCqF+7RnrTf5W1AYa9KFjpZa7z+71Cygt3XMMBRdIHsnXzz2EcAej2GjSi2/aAZHEA</EncryptedPassword>
+    <History>True|2023-09-07T00:25:50.3352937Z;True|2023-09-07T12:20:54.3543416+12:00;</History>
+    <LastFailureDetails />
+  </PropertyGroup>
+  <ItemGroup>
+    <DestinationConnectionStrings Include="ExpanseTrackerAzure">
+      <Value>Data Source=DESKTOP-LPUFQLK\SQLEXPRESS%3bInitial Catalog=ExpanseTracker%3bIntegrated Security=True%3bTrusted_Connection=True%3bTrustServerCertificate=True%3b</Value>
+    </DestinationConnectionStrings>
+  </ItemGroup>
+</Project>

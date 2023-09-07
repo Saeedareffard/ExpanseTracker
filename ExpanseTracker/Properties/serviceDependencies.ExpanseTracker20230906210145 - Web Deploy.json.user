@@ -2,14 +2,14 @@
   "dependencies": {
     "apis1": {
       "restored": true,
-      "restoreTime": "2023-09-06T07:29:15.2162254Z"
+      "restoreTime": "2023-09-07T00:18:44.6743483Z"
     }
   },
   "parameters": {
     "apis1.resourceGroupName": {
       "Name": "apis1.resourceGroupName",
       "Type": "resourceGroup",
-      "Value": "ExpanseTracker_group"
+      "Value": "ExpanseTrackerWindows"
     },
     "apis1.subscriptionId": {
       "Name": "apis1.subscriptionId",
