@@ -24,7 +24,7 @@ public class Startup
         services.AddSingleton(Configuration);
 // Add services to the container.
         services.AddControllers();
-        services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+      /*  services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(options =>
             {
                 options.TokenValidationParameters = new TokenValidationParameters
@@ -37,7 +37,7 @@ public class Startup
                     ValidAudience = Configuration["Tokens:Issuer"],
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Tokens:Key"]!))
                 };
-            });
+            });*/
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         services.AddEndpointsApiExplorer();
         services.AddSwaggerGen(c =>
@@ -47,30 +47,30 @@ public class Startup
                 Title = "Expanse Tracker",
                 Version = "v1"
             });
-               c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
-               {
-                   Name = "Authorization",
-                   Type = SecuritySchemeType.ApiKey,
-                   Scheme = "Bearer",
-                   BearerFormat = "JWT",
-                   In = ParameterLocation.Header,
-                   Description =
-                       "JWT Authorization header using the Bearer scheme. \r\n\r\n Enter 'Bearer' [space] and then your token in the text input below.\r\n\r\nExample: \"Bearer 1safsfsdfdfd\""
-               });
-               c.AddSecurityRequirement(new OpenApiSecurityRequirement
-               {
-                   {
-                       new OpenApiSecurityScheme
-                       {
-                           Reference = new OpenApiReference
-                           {
-                               Type = ReferenceType.SecurityScheme,
-                               Id = "Bearer"
-                           }
-                       },
-                       new string[] { }
-                   } 
-               }); 
+            /* c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                {
+                    Name = "Authorization",
+                    Type = SecuritySchemeType.ApiKey,
+                    Scheme = "Bearer",
+                    BearerFormat = "JWT",
+                    In = ParameterLocation.Header,
+                    Description =
+                        "JWT Authorization header using the Bearer scheme. \r\n\r\n Enter 'Bearer' [space] and then your token in the text input below.\r\n\r\nExample: \"Bearer 1safsfsdfdfd\""
+                });
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference
+                            {
+                                Type = ReferenceType.SecurityScheme,
+                                Id = "Bearer"
+                            }
+                        },
+                        new string[] { }
+                    } 
+                });*/
         });
         services.AddDbContext<ApplicationDbContext>(options =>
         {
@@ -85,7 +85,7 @@ public class Startup
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
     {
-        app.UseAuthentication();
+        //app.UseAuthentication();
         // Configure the HTTP request pipeline.
         app.UseSwagger();
         app.UseSwaggerUI();
@@ -93,13 +93,9 @@ public class Startup
         app.UseHttpsRedirection();
 
         app.UseRouting();
-        app.UseAuthorization();
+        //app.UseAuthorization();
         app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
-        app.UseEndpoints(endpoints =>
-        {
-            endpoints.MapControllers();
-        });
+        app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
         app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
-
-            }
+    }
 }
