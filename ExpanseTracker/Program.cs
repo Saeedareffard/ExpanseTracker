@@ -36,7 +36,7 @@ builder.Services.AddSwaggerGen(c =>
         Title = "Expanse Tracker",
         Version = "v1"
     });
-    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+ /*   c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
         Name = "Authorization",
         Type = SecuritySchemeType.ApiKey,
@@ -58,8 +58,8 @@ builder.Services.AddSwaggerGen(c =>
                 }
             },
             new string[] { }
-        }
-    });
+        } 
+    }); */
 });
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
