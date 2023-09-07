@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+
 namespace ExpanseTracker;
 
 public class Startup
@@ -87,16 +88,10 @@ public class Startup
         app.UseAuthentication();
         // Configure the HTTP request pipeline.
         app.UseSwagger();
-        if (env.IsDevelopment())
-        {
-            app.UseSwagger();
-            app.UseSwaggerUI();
-        }
+        app.UseSwaggerUI();
 
         app.UseHttpsRedirection();
 
         app.UseAuthorization();
-
-
     }
 }
