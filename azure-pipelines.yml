@@ -10,6 +10,7 @@ variables:
   solution: '**/*.sln'
   project: '**/*.csproj'
   sqlFile: '$(Build.SourcesDirectory)/SQL/sqlscript.sql'
+  -group: ExpanseTracker
 
 steps:
 - task: NuGetToolInstaller@1
