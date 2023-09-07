@@ -16,16 +16,19 @@ steps:
   displayName: 'Nuget tool installer'
 
 - task: DotNetCoreCLI@2
+  displayName: 'Restore' 
   inputs:
     command: 'restore'
     projects: '$(project)'
     feedsToUse: 'select'
 - task: DotNetCoreCLI@2
+  displayName: 'build'
   inputs:
     command: 'publish'
     publishWebProjects: true
     arguments: '--configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)'
 - task: PublishBuildArtifacts@1
+  displayName: 'BuildArtifact'
   inputs:
     PathtoPublish: '$(Build.ArtifactStagingDirectory)'
     ArtifactName: 'drop'
