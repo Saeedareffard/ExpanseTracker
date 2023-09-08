@@ -30,8 +30,8 @@ public class TransactionController : ControllerBase
     }
 
     [HttpGet]
-    [Authorize]
-    public ActionResult<IEnumerable<Transaction>> GetAllTransactions([FromQuery] int? pageNumber, [FromQuery] int? size,
+   // [Authorize]
+    public ActionResult<IEnumerable<Transaction>>? GetAllTransactions([FromQuery] int? pageNumber, [FromQuery] int? size,
         [FromQuery] string? orderBy, [FromQuery] string? orderByDesc)
     {
         if (orderBy != null && orderByDesc != null)

@@ -7,8 +7,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Application.Controllers
 {
-    [Route("api/[controller]")]
+    [ApiController]
     //[Authorize]
+    [Route("api/[controller]")]
     public class UserController:ControllerBase
     {
         private readonly IUnitOfWork _unitOfWork;
