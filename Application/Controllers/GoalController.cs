@@ -1,4 +1,5 @@
-﻿using Application.Services;
+﻿using Application.Dtos;
+using Application.Services;
 using Application.Specifications;
 using Domain.Entities;
 using Domain.Interfaces;
@@ -38,11 +39,11 @@ public class GoalController : ControllerBase
     }
 
     [HttpPut]
-    public ActionResult Put(Goal goal)
+    public async Task<ActionResult> Put(GoalDto goal)
     {
         try
         {
-            var result= _service.Update(goal);
+            var result= await _service.Update(goal);
             if (!result)
             {
                 return NotFound();
@@ -57,11 +58,11 @@ public class GoalController : ControllerBase
     }
 
     [HttpDelete("id")]
-    public ActionResult Delete(int id)
+    public async Task<ActionResult> Delete(int id)
     {
         try
         {
-            var result= _service.Delete(id);
+            var result= await _service.Delete(id);
             if (!result)
             {
                 return NotFound();
@@ -76,11 +77,11 @@ public class GoalController : ControllerBase
     }
 
     [HttpPost]
-    public ActionResult<Goal> Post([FromBody] Goal goal)
+    public async Task<ActionResult<Goal>> Post([FromBody] GoalDto goal)
     {
         try
         {
-            return _service.Add(goal);
+            return await _service.Add(goal);
         }
         catch (Exception e)
         {

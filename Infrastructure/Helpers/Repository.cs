@@ -1,4 +1,5 @@
 ﻿using System.Linq.Expressions;
+using AutoMapper;
 using Domain.Common;
 using Domain.Interfaces;
 using Infrastructure.Persistence.contexts;

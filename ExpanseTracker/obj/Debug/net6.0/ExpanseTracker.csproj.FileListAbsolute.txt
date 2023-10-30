@@ -188,3 +188,4 @@ C:\Users\laptop iran\source\repos\backend Expranse Tracker\ExpanseTracker\obj\De
 C:\Users\laptop iran\source\repos\backend Expranse Tracker\ExpanseTracker\obj\Debug\net6.0\ExpanseTracker.csproj.CopyComplete
 C:\Users\laptop iran\source\repos\backend Expranse Tracker\ExpanseTracker\obj\Debug\net6.0\ExpanseTracker.genruntimeconfig.cache
 C:\Users\laptop iran\source\repos\backend Expranse Tracker\ExpanseTracker\obj\Debug\net6.0\ref\ExpanseTracker.dll
+C:\Users\laptop iran\source\repos\backend Expranse Tracker\ExpanseTracker\bin\Debug\net6.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll

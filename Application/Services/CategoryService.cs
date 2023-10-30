@@ -1,4 +1,6 @@
-﻿using Application.Specifications;
+﻿using Application.Dtos;
+using Application.Specifications;
+using AutoMapper;
 using Domain.Entities;
 using Domain.Interfaces;
 
@@ -7,10 +9,12 @@ namespace Application.Services;
 public class CategoryService
 {
     private readonly IUnitOfWork _uow;
+    private readonly IMapper _mapper;
 
-    public CategoryService(IUnitOfWork uow)
+    public CategoryService(IUnitOfWork uow, IMapper mapper)
     {
         _uow = uow;
+        _mapper = mapper;
     }
 
     public IEnumerable<Category> Get()
@@ -25,32 +29,33 @@ public class CategoryService
     }
 
 
-    public bool Update(Category category)
+    public async Task<bool> Update(CategoryDto dto)
     {
+        var category = _mapper.Map<Category>(dto);
         if (GetById(category.Id) is null) return false;
 
 
         _uow.Repository<Category>().Update(category);
-        _uow.Complete();
+        await _uow.Complete();
 
         return true;
     }
 
-    public bool Delete(int id)
+    public async Task<bool> Delete(int id)
     {
         var result = GetById(id);
         if (result is null) return false;
 
 
         _uow.Repository<Category>().Remove(result);
-        _uow.Complete();
+        await _uow.Complete();
         return true;
     }
 
-    public Category Add(Category category)
+    public async Task Add(CategoryDto dto)
     {
+        var category = _mapper.Map<Category>(dto);
         _uow.Repository<Category>().Add(category);
-        _uow.Complete();
-        return category;
+        await _uow.Complete();
     }
 }

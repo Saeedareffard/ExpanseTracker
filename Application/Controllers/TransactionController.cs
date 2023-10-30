@@ -1,6 +1,6 @@
-﻿using Application.Services;
+﻿using Application.Dtos;
+using Application.Services;
 using Domain.Entities;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Application.Controllers;
@@ -30,8 +30,9 @@ public class TransactionController : ControllerBase
     }
 
     [HttpGet]
-   // [Authorize]
-    public ActionResult<IEnumerable<Transaction>>? GetAllTransactions([FromQuery] int? pageNumber, [FromQuery] int? size,
+    // [Authorize]
+    public ActionResult<IEnumerable<Transaction>>? GetAllTransactions([FromQuery] int? pageNumber,
+        [FromQuery] int? size,
         [FromQuery] string? orderBy, [FromQuery] string? orderByDesc)
     {
         if (orderBy != null && orderByDesc != null)
@@ -47,11 +48,11 @@ public class TransactionController : ControllerBase
     }
 
     [HttpPost]
-    public ActionResult<Transaction> PostTransaction([FromBody] Transaction transaction)
+    public async Task<ActionResult<Transaction>> PostTransaction([FromBody] TransactionDto transaction)
     {
         try
         {
-            _service.Add(transaction);
+            await _service.Add(transaction);
             return CreatedAtAction("GetTransaction", new { id = transaction.Id }, transaction);
         }
         catch (Exception e)
@@ -61,11 +62,11 @@ public class TransactionController : ControllerBase
     }
 
     [HttpPut]
-    public ActionResult<Transaction> UpdateTransaction([FromBody] Transaction transaction)
+    public async Task<ActionResult<Transaction>> UpdateTransaction([FromBody] TransactionDto transaction)
     {
         try
         {
-            var result = _service.Update(transaction);
+            var result = await _service.Update(transaction);
             if (!result) return NotFound();
             return Ok(transaction);
         }
@@ -76,13 +77,10 @@ public class TransactionController : ControllerBase
     }
 
     [HttpDelete]
-    public ActionResult DeleteTransaction(int id)
+    public async Task<ActionResult> DeleteTransaction(int id)
     {
-        var result = _service.Delete(id);
-        if (!result)
-        {
-            return NotFound();
-        }
+        var result = await _service.Delete(id);
+        if (!result) return NotFound();
 
         return NoContent();
     }

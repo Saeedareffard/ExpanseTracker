@@ -17,7 +17,7 @@ public class Transaction : BaseEntity
     [Required] public DateTime TransactionDate { get; set; }
 
     [Column(TypeName = "Varchar(250)")] public string? Description { get; set; }
-    [JsonIgnore] public virtual Category? Category { get; set; }
+   public virtual Category? Category { get; set; }
     [ForeignKey("Category")] [Required] public int CategoryId { get; set; }
     [ForeignKey("User")] [Required] public int UserId { get; set; }
 }

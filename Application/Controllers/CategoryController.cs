@@ -1,7 +1,6 @@
-﻿using Application.Services;
+﻿using Application.Dtos;
+using Application.Services;
 using Domain.Entities;
-using Domain.Interfaces;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -21,11 +20,11 @@ public class CategoryController : ControllerBase
     }
 
     [HttpPost]
-    public ActionResult<Category> Post([FromBody] Category category)
+    public async Task<ActionResult<Category>> Post([FromBody] CategoryDto category)
     {
         try
         {
-            _service.Add(category);
+            await _service.Add(category);
             return CreatedAtAction("GetCategory", new { id = category.Id }, category);
         }
         catch (Exception e)
@@ -46,11 +45,11 @@ public class CategoryController : ControllerBase
     }
 
     [HttpPut]
-    public ActionResult UpdateCategory( [FromBody] Category category)
+    public async Task<ActionResult>  UpdateCategory( [FromBody] CategoryDto category)
     {
         try
         {
-            var result = _service.Update(category);
+            var result = await _service.Update(category);
             if (!result)
             {
                 return NotFound();
@@ -65,9 +64,9 @@ public class CategoryController : ControllerBase
     }
 
     [HttpDelete("id")]
-    public ActionResult DeleteCategory(int id)
+    public async Task<ActionResult> DeleteCategory(int id)
     {
-        var result = _service.Delete(id);
+        var result = await _service.Delete(id);
         if (!result)
         {
             return NotFound();

@@ -5,6 +5,6 @@ namespace Domain.Interfaces
     public interface IUnitOfWork : IDisposable
     {
        IRepository<TEntity> Repository<TEntity>() where TEntity : BaseEntity;
-       int Complete();
+       Task<int> Complete();
     }
 }

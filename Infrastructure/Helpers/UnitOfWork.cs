@@ -20,9 +20,9 @@ public class UnitOfWork : IUnitOfWork
         _context.Dispose();
     }
 
-    public int Complete()
+    public Task<int> Complete()
     {
-        return _context.SaveChanges();
+        return  _context.SaveChangesAsync();
     }
 
     public IRepository<TEntity> Repository<TEntity>() where TEntity : BaseEntity

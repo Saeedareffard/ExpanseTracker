@@ -1,4 +1,6 @@
-﻿using Application.Specifications;
+﻿using Application.Dtos;
+using Application.Specifications;
+using AutoMapper;
 using Domain.Entities;
 using Domain.Interfaces;
 
@@ -7,16 +9,21 @@ namespace Application.Services;
 public class TransactionService
 {
     private readonly IUnitOfWork _unitOfWork;
+    private readonly IMapper _mapper;
 
-    public TransactionService(IUnitOfWork unitOfWork)
+    public TransactionService(IUnitOfWork unitOfWork, IMapper mapper)
     {
         _unitOfWork = unitOfWork;
+        _mapper = mapper;
     }
 
     public IEnumerable<Transaction> Get(int? pageNumber, int? size, string? orderBy, string? orderByDesc)
     {
+        var specification =
+            new TransactionSpecification.TransactionsPagedAndOrdered(pageNumber, size, orderBy, orderByDesc);
+
         return _unitOfWork.Repository<Transaction>()
-            .Find(new TransactionSpecification.TransactionsPagedAndOrdered(pageNumber, size, orderBy, orderByDesc));
+            .Find(specification);
     }
 
     public Transaction? GetById(int id)
@@ -36,28 +43,29 @@ public class TransactionService
             .Find(new TransactionSpecification.TransactionsByCategoryIdSpecification(categoryId));
     }
 
-    public Transaction Add(Transaction transaction)
+    public async Task Add(TransactionDto dto)
     {
+        var transaction = _mapper.Map<Transaction>(dto);
         _unitOfWork.Repository<Transaction>().Add(transaction);
-        _unitOfWork.Complete();
-        return transaction;
+        await _unitOfWork.Complete();
     }
 
-    public bool Update(Transaction transaction)
+    public async Task<bool> Update(TransactionDto dto)
     {
+        var transaction = _mapper.Map<Transaction>(dto);
         if (GetById(transaction.Id) is null) return false;
         _unitOfWork.Repository<Transaction>().Update(transaction);
-        _unitOfWork.Complete();
+        await _unitOfWork.Complete();
         return true;
     }
 
 
-    public bool Delete(int id)
+    public async Task<bool> Delete(int id)
     {
         var result = GetById(id);
         if (result is null) return false;
         _unitOfWork.Repository<Transaction>().Remove(result);
-        _unitOfWork.Complete();
+        await _unitOfWork.Complete();
         return true;
     }
 }
