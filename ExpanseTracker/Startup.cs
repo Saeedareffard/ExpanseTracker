@@ -1,4 +1,5 @@
-﻿using Application.Services;
+﻿using Application.Common;
+using Application.Services;
 using Domain.Interfaces;
 using Infrastructure.Helpers;
 using Infrastructure.Persistence.contexts;
@@ -40,6 +41,7 @@ public class Startup
         services.AddTransient<GoalService>();
         services.AddTransient<TransactionService>();
         services.AddTransient<CategoryService>();
+        services.AddApplicationMediatR();
     }
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

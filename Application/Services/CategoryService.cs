@@ -17,15 +17,15 @@ public class CategoryService
         _mapper = mapper;
     }
 
-    public IEnumerable<Category> Get()
+    public async Task<IEnumerable<Category>> Get()
     {
-        return _uow.Repository<Category>().Find(new CategorySpecification());
+        return await _uow.Repository<Category>().FindAsync(new CategorySpecification());
     }
 
 
-    public Category? GetById(int id)
+    public async Task<Category?> GetById(int id)
     {
-        return _uow.Repository<Category>().GetById(id);
+        return await _uow.Repository<Category>().GetByIdAsync(id);
     }
 
 
@@ -43,11 +43,11 @@ public class CategoryService
 
     public async Task<bool> Delete(int id)
     {
-        var result = GetById(id);
+        var result = await GetById(id);
         if (result is null) return false;
 
 
-        _uow.Repository<Category>().Remove(result);
+        await _uow.Repository<Category>().RemoveAsync(result);
         await _uow.Complete();
         return true;
     }
@@ -55,7 +55,7 @@ public class CategoryService
     public async Task Add(CategoryDto dto)
     {
         var category = _mapper.Map<Category>(dto);
-        _uow.Repository<Category>().Add(category);
+        await _uow.Repository<Category>().AddAsync(category);
         await _uow.Complete();
     }
 }

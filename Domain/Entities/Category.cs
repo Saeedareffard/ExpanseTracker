@@ -13,6 +13,7 @@ namespace Domain.Entities
     public class Category : BaseEntity
     {
         [Required] public string Name { get; set; }
+        [JsonIgnore]
         public virtual List<Transaction>? Transactions { get; set; }
 
     }

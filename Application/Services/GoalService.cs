@@ -17,15 +17,15 @@ public class GoalService
         _mapper = mapper;
     }
 
-    public IEnumerable<Goal> Get(int? pageNumber, int? size, string? orderBy, string? orderByDesc)
+    public async Task<IEnumerable<Goal>> Get(int? pageNumber, int? size, string? orderBy, string? orderByDesc)
     {
-        return _unitOfWork.Repository<Goal>()
-            .Find(new GoalSpecification.PaginatedGoalsSpec(pageNumber, size, orderBy, orderByDesc));
+        return await _unitOfWork.Repository<Goal>()
+            .FindAsync(new GoalSpecification.PaginatedGoalsSpec(pageNumber, size, orderBy, orderByDesc));
     }
 
-    public Goal? GetById(int id)
+    public async Task<Goal?> GetById(int id)
     {
-        return _unitOfWork.Repository<Goal>().GetById(id);
+        return await _unitOfWork.Repository<Goal>().GetByIdAsync(id);
     }
 
     public async Task<bool> Update(GoalDto dto)
@@ -40,9 +40,9 @@ public class GoalService
 
     public async Task<bool> Delete(int id)
     {
-        var result = _unitOfWork.Repository<Goal>().GetById(id);
+        var result = await _unitOfWork.Repository<Goal>().GetByIdAsync(id);
         if (result is null) return false;
-        _unitOfWork.Repository<Goal>().Remove(result);
+        await _unitOfWork.Repository<Goal>().RemoveAsync(result);
         await _unitOfWork.Complete();
         return true;
     }
@@ -50,8 +50,8 @@ public class GoalService
     public async Task<Goal> Add(GoalDto dto)
     {
         var goal = _mapper.Map<Goal>(dto);
-        _unitOfWork.Repository<Goal>().Add(goal);
+        await _unitOfWork.Repository<Goal>().AddAsync(goal);
         await _unitOfWork.Complete();
-        return GetById(goal.Id)!;
+        return (await GetById(goal.Id))!;
     }
 }

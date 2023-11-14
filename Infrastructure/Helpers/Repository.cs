@@ -1,4 +1,8 @@
-﻿using System.Linq.Expressions;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
+using System.Threading.Tasks;
 using AutoMapper;
 using Domain.Common;
 using Domain.Interfaces;
@@ -9,7 +13,7 @@ namespace Infrastructure.Helpers
 {
     public class Repository<TEntity> : IRepository<TEntity> where TEntity : BaseEntity
     {
-        private  readonly  ApplicationDbContext _context;
+        private readonly ApplicationDbContext _context;
 
         public Repository(ApplicationDbContext context)
         {
@@ -20,60 +24,63 @@ namespace Infrastructure.Helpers
         {
             return SpecificationEvaluator<TEntity>.GetQuery(_context.Set<TEntity>().AsQueryable(), spec);
         }
-        public TEntity? GetById(int id)
+
+        public async Task<TEntity?> GetByIdAsync(int id)
         {
-            return _context.Set<TEntity>().Find(id);
+            return await _context.Set<TEntity>().FindAsync(id);
         }
 
-        public IEnumerable<TEntity> Find(ISpecification<TEntity> specification)
+        public async Task<IEnumerable<TEntity>> FindAsync(ISpecification<TEntity> specification)
         {
-           return ApplySpecification(specification);
+            return await ApplySpecification(specification).ToListAsync();
         }
 
-        public void Add(TEntity entity)
+        public async Task AddAsync(TEntity entity)
         {
-            _context.Set<TEntity>().Add(entity);
+            await _context.Set<TEntity>().AddAsync(entity);
         }
 
-        public void AddRange(IEnumerable<TEntity> entities)
+        public async Task AddRangeAsync(IEnumerable<TEntity> entities)
         {
-            _context.Set<TEntity>().AddRange(entities);
+            await _context.Set<TEntity>().AddRangeAsync(entities);
         }
 
-        public void Remove(TEntity entity)
+        public async Task RemoveAsync(TEntity entity)
         {
             _context.Set<TEntity>().Remove(entity);
+            await Task.CompletedTask; // EF Core does not have an async Remove method
         }
 
-        public void RemoveRange(IEnumerable<TEntity> entities)
+        public async Task RemoveRangeAsync(IEnumerable<TEntity> entities)
         {
             _context.Set<TEntity>().RemoveRange(entities);
+            await Task.CompletedTask; // EF Core does not have an async RemoveRange method
         }
 
         public void Update(TEntity entity)
         {
             _context.Set<TEntity>().Update(entity);
-            _context.Entry(entity).State=EntityState.Modified;
+            _context.Entry(entity).State = EntityState.Modified;
         }
 
-        public bool Contains(ISpecification<TEntity>? specification)
+        public async Task<bool> ContainsAsync(ISpecification<TEntity>? specification)
         {
-            return Count(specification) > 0;
+            return await CountAsync(specification) > 0;
         }
 
-        public bool Contains(Expression<Func<TEntity, bool>> predicate)
+        public async Task<bool> ContainsAsync(Expression<Func<TEntity, bool>> predicate)
         {
-            return Count(predicate) > 0;
+            return await CountAsync(predicate) > 0;
         }
 
-        public int Count(ISpecification<TEntity>? specification)
+        public async Task<int> CountAsync(ISpecification<TEntity>? specification)
         {
-            return ApplySpecification(specification!).Count();
+            return await ApplySpecification(specification!).CountAsync();
         }
 
-        public int Count(Expression<Func<TEntity, bool>> predicate)
+        public async Task<int> CountAsync(Expression<Func<TEntity, bool>> predicate)
         {
-            return _context.Set<TEntity>().Count(predicate);
+            return await _context.Set<TEntity>().CountAsync(predicate);
         }
     }
 }

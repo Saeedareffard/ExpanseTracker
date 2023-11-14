@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "B3XXm66BKUQMIOUE9dbWyfR4AxbbSYVxoEd/5+5LnLwQSmpZnelzCSaIW0UT4ZUFFG3voTkh3+3lBWQhufeQzA==",
+  "dgSpecHash": "aIGn7FPetuDOHKsSZSAveqwRDMscKxHzMtSQ3FF1RpXmXpS8DnI5liOX8/YbJQxCqe5yKAWD85Ao23Cq4Ftwuw==",
   "success": true,
   "projectFilePath": "C:\\Users\\laptop iran\\source\\repos\\backend Expranse Tracker\\Infrastructure\\Infrastructure.csproj",
   "expectedPackageFiles": [
@@ -19,7 +19,10 @@
     "C:\\Users\\laptop iran\\.nuget\\packages\\microsoft.extensions.logging.abstractions\\7.0.0\\microsoft.extensions.logging.abstractions.7.0.0.nupkg.sha512",
     "C:\\Users\\laptop iran\\.nuget\\packages\\microsoft.extensions.options\\7.0.0\\microsoft.extensions.options.7.0.0.nupkg.sha512",
     "C:\\Users\\laptop iran\\.nuget\\packages\\microsoft.extensions.primitives\\7.0.0\\microsoft.extensions.primitives.7.0.0.nupkg.sha512",
-    "C:\\Users\\laptop iran\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\6.0.0\\system.runtime.compilerservices.unsafe.6.0.0.nupkg.sha512"
+    "C:\\Users\\laptop iran\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\6.0.0\\system.runtime.compilerservices.unsafe.6.0.0.nupkg.sha512",
+    "C:\\Users\\laptop iran\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\6.0.15\\microsoft.windowsdesktop.app.ref.6.0.15.nupkg.sha512",
+    "C:\\Users\\laptop iran\\.nuget\\packages\\microsoft.netcore.app.ref\\6.0.15\\microsoft.netcore.app.ref.6.0.15.nupkg.sha512",
+    "C:\\Users\\laptop iran\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\6.0.15\\microsoft.aspnetcore.app.ref.6.0.15.nupkg.sha512"
   ],
   "logs": []
 }

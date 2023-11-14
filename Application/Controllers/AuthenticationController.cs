@@ -24,10 +24,10 @@ public class AuthenticationController : ControllerBase
     }
 
     [HttpPost("validate")]
-    public ActionResult<User> GetUserByCredential([FromBody] UserCredentialDto credentials)
+    public async Task<ActionResult<User>> GetUserByCredential([FromBody] UserCredentialDto credentials)
     {
-        var user = _unitOfWork.Repository<UserCredentialModel>()
-            .Find(new UserSpecification.UserCredentialsSpecification(credentials.UserName, credentials.Password)).SingleOrDefault();
+        var user = (await _unitOfWork.Repository<UserCredentialModel>()
+            .FindAsync(new UserSpecification.UserCredentialsSpecification(credentials.UserName, credentials.Password))).SingleOrDefault();
         ;
         if (user is null) return Unauthorized();
 
@@ -58,12 +58,12 @@ public class AuthenticationController : ControllerBase
     }
 
     [HttpPost]
-    public ActionResult AssignPasswordToUser([FromBody] UserCredentialModel credModel)
+    public async Task<ActionResult> AssignPasswordToUser([FromBody] UserCredentialModel credModel)
     {
         try
         {
-            _unitOfWork.Repository<UserCredentialModel>().Add(credModel);
-            _unitOfWork.Complete();
+            await _unitOfWork.Repository<UserCredentialModel>().AddAsync(credModel);
+            await _unitOfWork.Complete();
             return Ok();
         }
         catch (Exception e)

@@ -1,8 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "nUFJ0T0l9gnv4/c/nXf2BRrEwuVy+bDvLHs53X5l8DVL+f58nN5lGS1SxO475ZDSlfGdGrVtwYUc+X2KnFU6zw==",
+  "dgSpecHash": "ryuOWXMgnj2tyMsloqGnSgVYK1LKXyYEVRs6WDXH4BzCKPTAEi5n3etDB1nHwREHFQ/DiCYUJkyLeRkGekR0uA==",
   "success": true,
   "projectFilePath": "C:\\Users\\laptop iran\\source\\repos\\backend Expranse Tracker\\Domain\\Domain.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\laptop iran\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\7.0.0\\microsoft.extensions.dependencyinjection.abstractions.7.0.0.nupkg.sha512",
+    "C:\\Users\\laptop iran\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\6.0.15\\microsoft.windowsdesktop.app.ref.6.0.15.nupkg.sha512",
+    "C:\\Users\\laptop iran\\.nuget\\packages\\microsoft.netcore.app.ref\\6.0.15\\microsoft.netcore.app.ref.6.0.15.nupkg.sha512",
+    "C:\\Users\\laptop iran\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\6.0.15\\microsoft.aspnetcore.app.ref.6.0.15.nupkg.sha512"
+  ],
   "logs": []
 }

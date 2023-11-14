@@ -1,10 +1,13 @@
 ﻿using Application.Dtos;
+using Application.Goals;
 using Application.Services;
 using Application.Specifications;
 using Domain.Entities;
 using Domain.Interfaces;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Application.Controllers;
 
@@ -13,7 +16,9 @@ namespace Application.Controllers;
 [Route("api/[controller]")]
 public class GoalController : ControllerBase
 {
-    private readonly GoalService _service;
+    private readonly GoalService _service; private ISender _mediator = null!;
+
+    protected ISender Mediator => _mediator ??= HttpContext.RequestServices.GetRequiredService<ISender>();
 
     public GoalController(GoalService service)
     {
@@ -77,11 +82,11 @@ public class GoalController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult<Goal>> Post([FromBody] GoalDto goal)
+    public async Task<ActionResult<int>> Post([FromBody] CreateGoalRequest goal)
     {
         try
         {
-            return await _service.Add(goal);
+            return await Mediator.Send(goal);
         }
         catch (Exception e)
         {

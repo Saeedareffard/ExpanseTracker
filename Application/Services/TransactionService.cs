@@ -17,36 +17,37 @@ public class TransactionService
         _mapper = mapper;
     }
 
-    public IEnumerable<Transaction> Get(int? pageNumber, int? size, string? orderBy, string? orderByDesc)
+    public async Task<IEnumerable<Transaction>> Get(int? pageNumber, int? size, string? orderBy, string? orderByDesc)
     {
         var specification =
             new TransactionSpecification.TransactionsPagedAndOrdered(pageNumber, size, orderBy, orderByDesc);
+        specification.Includes.Add(x=> x.Category!);
 
-        return _unitOfWork.Repository<Transaction>()
-            .Find(specification);
+        return await _unitOfWork.Repository<Transaction>()
+            .FindAsync(specification);
     }
 
-    public Transaction? GetById(int id)
+    public async Task<Transaction?> GetById(int id)
     {
-        return _unitOfWork.Repository<Transaction>().GetById(id);
+        return await _unitOfWork.Repository<Transaction>().GetByIdAsync(id);
     }
 
-    public IEnumerable<Transaction> GetByCategoryIds(List<int> categoryIds)
+    public async Task<IEnumerable<Transaction>> GetByCategoryIds(List<int> categoryIds)
     {
-        return _unitOfWork.Repository<Transaction>()
-            .Find(new TransactionSpecification.TransactionsByCategoryIdSpecification(categoryIds));
+        return await _unitOfWork.Repository<Transaction>()
+            .FindAsync(new TransactionSpecification.TransactionsByCategoryIdSpecification(categoryIds));
     }
 
-    public IEnumerable<Transaction> GetByCategory(int categoryId)
+    public async Task<IEnumerable<Transaction>> GetByCategory(int categoryId)
     {
-        return _unitOfWork.Repository<Transaction>()
-            .Find(new TransactionSpecification.TransactionsByCategoryIdSpecification(categoryId));
+        return await _unitOfWork.Repository<Transaction>()
+            .FindAsync(new TransactionSpecification.TransactionsByCategoryIdSpecification(categoryId));
     }
 
     public async Task Add(TransactionDto dto)
     {
         var transaction = _mapper.Map<Transaction>(dto);
-        _unitOfWork.Repository<Transaction>().Add(transaction);
+        await _unitOfWork.Repository<Transaction>().AddAsync(transaction);
         await _unitOfWork.Complete();
     }
 
@@ -62,9 +63,9 @@ public class TransactionService
 
     public async Task<bool> Delete(int id)
     {
-        var result = GetById(id);
+        var result = await GetById(id);
         if (result is null) return false;
-        _unitOfWork.Repository<Transaction>().Remove(result);
+        await _unitOfWork.Repository<Transaction>().RemoveAsync(result);
         await _unitOfWork.Complete();
         return true;
     }
