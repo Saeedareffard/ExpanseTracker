@@ -35,9 +35,9 @@ public class AuthenticationController : ControllerBase
     }
 
     [HttpPost("login")]
-    public ActionResult Login([FromBody] UserCredentialDto credential)
+    public async Task<ActionResult> Login([FromBody] UserCredentialDto credential)
     {
-        var user = GetUserByCredential(credential);
+        var user = await GetUserByCredential(credential);
         if (user.Result is UnauthorizedResult) return Unauthorized();
 
         var claims = new[]

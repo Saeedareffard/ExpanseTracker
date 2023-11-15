@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "O8zxYD876cLUu4mJRtW1u051RbMEWdHGv9hzEhQWrNXOtF2r8tx5ELtnRdDZfJv9ghl9EiO+tWHqCCLgd4Q1Zw==",
+  "dgSpecHash": "4qIHf21hCfNkXRdePmohqZLuuqA1gS3RQix2gy0w7Uo1V3ik9dy8dM3cgYtvs6A82GRA57Dfh4lo+PAfdn+fbQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\laptop iran\\source\\repos\\backend Expranse Tracker\\Application\\Application.csproj",
   "expectedPackageFiles": [
@@ -56,6 +56,7 @@
     "C:\\Users\\laptop iran\\.nuget\\packages\\microsoft.netcore.targets\\1.0.1\\microsoft.netcore.targets.1.0.1.nupkg.sha512",
     "C:\\Users\\laptop iran\\.nuget\\packages\\newtonsoft.json\\9.0.1\\newtonsoft.json.9.0.1.nupkg.sha512",
     "C:\\Users\\laptop iran\\.nuget\\packages\\runtime.native.system\\4.0.0\\runtime.native.system.4.0.0.nupkg.sha512",
+    "C:\\Users\\laptop iran\\.nuget\\packages\\serilog\\3.1.1\\serilog.3.1.1.nupkg.sha512",
     "C:\\Users\\laptop iran\\.nuget\\packages\\system.appcontext\\4.1.0\\system.appcontext.4.1.0.nupkg.sha512",
     "C:\\Users\\laptop iran\\.nuget\\packages\\system.buffers\\4.5.0\\system.buffers.4.5.0.nupkg.sha512",
     "C:\\Users\\laptop iran\\.nuget\\packages\\system.collections\\4.0.11\\system.collections.4.0.11.nupkg.sha512",

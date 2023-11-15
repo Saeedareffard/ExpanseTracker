@@ -499,6 +499,14 @@
           "Microsoft.NETCore.Targets": "1.0.1"
         }
       },
+      "Serilog/3.1.1": {
+        "runtime": {
+          "lib/net6.0/Serilog.dll": {
+            "assemblyVersion": "2.0.0.0",
+            "fileVersion": "3.1.1.0"
+          }
+        }
+      },
       "System.AppContext/4.1.0": {
         "dependencies": {
           "System.Runtime": "4.1.0"
@@ -829,8 +837,14 @@
         "dependencies": {
           "AutoMapper": "12.0.1",
           "Domain": "1.0.0",
+          "FluentValidation": "11.8.0",
+          "FluentValidation.AspNetCore": "11.3.0",
+          "FluentValidation.DependencyInjectionExtensions": "11.8.0",
+          "Microsoft.AspNetCore.Http.Abstractions": "2.2.0",
           "Microsoft.EntityFrameworkCore": "7.0.8",
-          "Microsoft.EntityFrameworkCore.Relational": "7.0.8"
+          "Microsoft.EntityFrameworkCore.Relational": "7.0.8",
+          "Newtonsoft.Json": "9.0.1",
+          "Serilog": "3.1.1"
         },
         "runtime": {
           "Infrastructure.dll": {}
@@ -1207,6 +1221,13 @@
       "sha512": "sha512-QfS/nQI7k/BLgmLrw7qm7YBoULEvgWnPI+cYsbfCVFTW8Aj+i8JhccxcFMu1RWms0YZzF+UHguNBK4Qn89e2Sg==",
       "path": "runtime.native.system/4.0.0",
       "hashPath": "runtime.native.system.4.0.0.nupkg.sha512"
+    },
+    "Serilog/3.1.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-P6G4/4Kt9bT635bhuwdXlJ2SCqqn2nhh4gqFqQueCOr9bK/e7W9ll/IoX1Ter948cV2Z/5+5v8pAfJYUISY03A==",
+      "path": "serilog/3.1.1",
+      "hashPath": "serilog.3.1.1.nupkg.sha512"
     },
     "System.AppContext/4.1.0": {
       "type": "package",

@@ -194,3 +194,5 @@ C:\Users\laptop iran\source\repos\backend Expranse Tracker\ExpanseTracker\bin\De
 C:\Users\laptop iran\source\repos\backend Expranse Tracker\ExpanseTracker\bin\Debug\net6.0\FluentValidation.dll
 C:\Users\laptop iran\source\repos\backend Expranse Tracker\ExpanseTracker\bin\Debug\net6.0\FluentValidation.AspNetCore.dll
 C:\Users\laptop iran\source\repos\backend Expranse Tracker\ExpanseTracker\bin\Debug\net6.0\FluentValidation.DependencyInjectionExtensions.dll
+C:\Users\laptop iran\source\repos\backend Expranse Tracker\ExpanseTracker\bin\Debug\net6.0\Serilog.dll
+C:\Users\laptop iran\source\repos\backend Expranse Tracker\ExpanseTracker\bin\Debug\net6.0\Newtonsoft.Json.dll

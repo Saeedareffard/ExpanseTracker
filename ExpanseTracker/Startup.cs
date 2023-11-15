@@ -1,6 +1,7 @@
 ﻿using Application.Common;
 using Application.Services;
 using Domain.Interfaces;
+using Infrastructure.Configuration;
 using Infrastructure.Helpers;
 using Infrastructure.Persistence.contexts;
 using Microsoft.EntityFrameworkCore;
@@ -23,6 +24,8 @@ public class Startup
         services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 // Add services to the container.
         services.AddControllers();
+        services.AddInfrastructureInjections();
+
         services.AddEndpointsApiExplorer();
         services.AddSwaggerGen(c =>
         {
@@ -47,6 +50,7 @@ public class Startup
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
     {
         //app.UseAuthentication();
+        app.AddExceptionMiddleware();
         // Configure the HTTP request pipeline.
         app.UseSwagger();
         app.UseSwaggerUI();
@@ -54,6 +58,7 @@ public class Startup
         app.UseHttpsRedirection();
 
         app.UseRouting();
+        //app.AddExceptionMiddleware();
         //app.UseAuthorization();
         app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
         app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
